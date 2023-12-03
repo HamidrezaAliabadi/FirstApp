@@ -14,7 +14,7 @@
                     [ngModelOptions]="{standalone: true}" (ngModelChange)="titleFilter()" (keypress)="toPersian($event)"
                     placeholder="عنوان وظیفه" />
 
-                    <input type="hidden" id="taskId" class="form-control" [(ngModel)]="taskId"
+                  <input type="hidden" id="taskId" class="form-control" [(ngModel)]="taskId"
                     [ngModelOptions]="{standalone: true}" />
                 </div>
               </div>
@@ -36,16 +36,18 @@
                   <th scope="col">ردیف.</th>
                   <th scope="col">عنوان وظیفه</th>
                   <th scope="col">وضعیت</th>
+                  <th scope="col">پیشرفت</th>
                   <th scope="col">عملیات</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of filteredTasks; let i = index; trackBy:trackByItems;">
-                  <th scope="row">{{i + 1}}</th>
+                  <td scope="row">{{i + 1}}</td>
                   <td id="td{{item.id.toString()}}" [ngClass]="{'text-decoration-line-through': item.status == 3}"
-                    (mouseenter)="changeCursor(item.id)" (click)="editTitle(item.id)">
+                    (mouseenter)="changeCursor(item.id)" (click)="editTask(item.id)">
                     {{item.title}}
                   </td>
+
                   <td>
                     <ng-container [ngSwitch]="item.status">
                       <span class="text-warning" *ngSwitchCase="1" class="text-danger">انتظار</span>
@@ -54,6 +56,17 @@
                       <span class="text-warning" *ngSwitchDefault class="text-dark">هیچکدام</span>
                     </ng-container>
                   </td>
+                 
+                  <td>
+                    <div class="progress" style="height: 20px;">
+                      <div [ngClass]="{'progress-bar progress-bar-striped bg-success': item.status == 3, 'progress-bar progress-bar-striped bg-warning': item.status == 2
+                                      , 'progress-bar progress-bar-striped bg-danger': item.status == 1}" role="progressbar"
+                        style="width: {{100/3*item.status}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                       <!-- {{100/3*item.status}}%-->
+                      </div>
+                    </div>
+                  </td>
+
                   <td>
                     <ng-container [ngSwitch]="item.status">
                       <button type="submit" class="btn btn-outline-warning ms-1" data-toggle="tooltip"
@@ -73,6 +86,7 @@
                       (click)="deleteTask(item.id)">
                       <i class="bi bi-x-square-fill"></i></button>
                   </td>
+
                 </tr>
               </tbody>
             </table>

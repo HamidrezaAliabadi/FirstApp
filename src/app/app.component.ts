@@ -40,20 +40,12 @@ export class AppComponent {
 
   constructor() {
     this.filteredTasks = this.tasks
-    console.log(this.filteredTasks)
+    // console.log(this.filteredTasks)
   }
 
   // getList(): Task[] {
-  //   return [
-  //   ];
+  //   return [];
   // }
-
-  editTitle(taskId: number) {
-    const task = this.tasks.find(x => x.id == taskId)!
-    // const index = this.tasks.indexOf(task);
-    this.taskTitle = task.title
-    this.taskId = task.id
-  }
 
   addTask() {
     if (!this.taskTitle) {
@@ -83,17 +75,11 @@ export class AppComponent {
     this.filteredTasks = this.tasks
   }
 
-  titleFilter() {
-    if (this.taskTitle.trim() != '') {
-      this.filteredTasks = this.tasks.filter(x => x.title.includes(this.taskTitle))
-    } else {
-      this.filteredTasks = this.tasks
-    }
-  }
-
-  changeCursor(itemId: number) {
-    const a = document.getElementById('td' + itemId.toString())!
-    a.style.cursor = "pointer"
+  editTask(taskId: number) {
+    const task = this.tasks.find(x => x.id == taskId)!
+    // const index = this.tasks.indexOf(task);
+    this.taskTitle = task.title
+    this.taskId = task.id
   }
 
   deleteTask(taskId: number) {
@@ -113,6 +99,19 @@ export class AppComponent {
     if (confirm('آیا از حذف کل لیست مطمئن هستید؟') == true) {
       this.tasks = []
     }
+  }
+
+  titleFilter() {
+    if (this.taskTitle.trim() != '') {
+      this.filteredTasks = this.tasks.filter(x => x.title.includes(this.taskTitle))
+    } else {
+      this.filteredTasks = this.tasks
+    }
+  }
+
+  changeCursor(itemId: number) {
+    const a = document.getElementById('td' + itemId.toString())!
+    a.style.cursor = "pointer"
   }
 
   trackByItems(index: number, task: Task): number {
