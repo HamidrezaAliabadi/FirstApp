@@ -11,17 +11,21 @@
               <div class="col-8">
                 <div class="form-outline">
                   <input type="text" id="taskTitle" class="form-control" [(ngModel)]="taskTitle"
-                    [ngModelOptions]="{standalone: true}" (ngModelChange)="titleFilter()" placeholder="عنوان وظیفه" />
+                    [ngModelOptions]="{standalone: true}" (ngModelChange)="titleFilter()" (keypress)="toPersian($event)"
+                    placeholder="عنوان وظیفه" />
+
+                    <input type="hidden" id="taskId" class="form-control" [(ngModel)]="taskId"
+                    [ngModelOptions]="{standalone: true}" />
                 </div>
               </div>
 
               <div class="col-4 text-end">
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="افزودن وظیفه"
-                  (click)="addTask()">افزودن
-                  وظیفه</button>
+                  (click)="addTask()"><i class="bi bi-plus-circle-fill"></i><!-- افزودن
+                  وظیفه--></button>
                 <button type="submit" class="btn btn-danger mx-1" data-toggle="tooltip" title="حذف همه"
                   (click)="deleteAll()">
-                  حذف همه</button>
+                  <i class="bi bi-trash3-fill"></i><!--حذف همه--></button>
               </div>
 
             </form>
@@ -29,17 +33,17 @@
             <table class="table table-striped mb-4">
               <thead>
                 <tr>
-                  <th scope="col">شماره.</th>
+                  <th scope="col">ردیف.</th>
                   <th scope="col">عنوان وظیفه</th>
                   <th scope="col">وضعیت</th>
                   <th scope="col">عملیات</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of tasks; let i = index; trackBy:trackByItems;">
+                <tr *ngFor="let item of filteredTasks; let i = index; trackBy:trackByItems;">
                   <th scope="row">{{i + 1}}</th>
                   <td id="td{{item.id.toString()}}" [ngClass]="{'text-decoration-line-through': item.status == 3}"
-                    (mouseenter)="changeCursor(item.id)">
+                    (mouseenter)="changeCursor(item.id)" (click)="editTitle(item.id)">
                     {{item.title}}
                   </td>
                   <td>
@@ -53,20 +57,21 @@
                   <td>
                     <ng-container [ngSwitch]="item.status">
                       <button type="submit" class="btn btn-outline-warning ms-1" data-toggle="tooltip"
-                        title="در حال انجام" *ngSwitchCase="1" (click)="changeStatus(item.id, item.status + 1)">در حال
-                        انجام</button>
-                      <button type="submit" class="btn btn-outline-dark ms-1" data-toggle="tooltip" title="در حال انجام"
-                        *ngSwitchCase="2" (click)="changeStatus(item.id, item.status - 1)">در حال
-                        انجام</button>
-                      <button type="submit" class="btn btn-outline-dark ms-1" data-toggle="tooltip" title="در حال انجام"
-                        *ngSwitchCase="3" (click)="changeStatus(item.id, item.status - 1)">در حال
-                        انجام</button>
+                        title="در حال انجام" *ngSwitchCase="1" (click)="changeStatus(item.id, item.status + 1)">
+                        <i class="bi bi-skip-start-btn-fill"></i><!-- در حال انجام--></button>
+                      <button type="submit" class="btn btn-outline-info ms-1" data-toggle="tooltip" title="انتظار"
+                        *ngSwitchCase="2" (click)="changeStatus(item.id, item.status - 1)">
+                        <i class="bi bi-hourglass"></i><!--انتظار--></button>
+                      <button type="submit" class="btn btn-outline-info ms-1" data-toggle="tooltip" title="در حال انجام"
+                        *ngSwitchCase="3" (click)="changeStatus(item.id, item.status - 1)">
+                        <i class="bi bi-skip-start-btn-fill"></i><!-- در حال انجام--></button>
                       <button type="submit" class="btn btn-outline-success ms-1" data-toggle="tooltip"
-                        title="پایان یافته" *ngSwitchCase="2" (click)="changeStatus(item.id, item.status + 1)">پایان
-                        یافته</button>
+                        title="پایان یافته" *ngSwitchCase="2" (click)="changeStatus(item.id, item.status + 1)">
+                        <i class="bi bi-check-square-fill"></i><!--پایان یافته--></button>
                     </ng-container>
                     <button type="submit" class="btn btn-outline-danger" data-toggle="tooltip" title="حذف"
-                      (click)="deleteTask(item.id)">حذف</button>
+                      (click)="deleteTask(item.id)">
+                      <i class="bi bi-x-square-fill"></i></button>
                   </td>
                 </tr>
               </tbody>
