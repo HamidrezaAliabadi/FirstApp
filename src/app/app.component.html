@@ -41,53 +41,63 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of filteredTasks; let i = index; trackBy:trackByItems;">
-                  <td scope="row">{{i + 1}}</td>
-                  <td id="td{{item.id.toString()}}" [ngClass]="{'text-decoration-line-through': item.status == 3}"
-                    (mouseenter)="changeCursor(item.id)" (click)="editTask(item.id)">
-                    {{item.title}}
-                  </td>
+                <ng-container *ngIf="filteredTasks.length; else noItemInTask">
+                  <tr *ngFor="let item of filteredTasks; let i = index; trackBy:trackByItems;">
+                    <td scope="row">{{i + 1}}</td>
+                    <td id="td{{item.id.toString()}}" [ngClass]="{'text-decoration-line-through': item.status == 3}"
+                      (mouseenter)="changeCursor(item.id)" (click)="editTask(item.id)">
+                      {{item.title}}
+                    </td>
 
-                  <td>
-                    <ng-container [ngSwitch]="item.status">
-                      <span class="text-warning" *ngSwitchCase="1" class="text-danger">انتظار</span>
-                      <span class="text-warning" *ngSwitchCase="2" class="text-warning">در حال انجام</span>
-                      <span class="text-warning" *ngSwitchCase="3" class="text-success">انجام شده!</span>
-                      <span class="text-warning" *ngSwitchDefault class="text-dark">هیچکدام</span>
-                    </ng-container>
-                  </td>
-                 
-                  <td>
-                    <div class="progress" style="height: 20px;">
-                      <div [ngClass]="{'progress-bar progress-bar-striped bg-success': item.status == 3, 'progress-bar progress-bar-striped bg-warning': item.status == 2
-                                      , 'progress-bar progress-bar-striped bg-danger': item.status == 1}" role="progressbar"
-                        style="width: {{100/3*item.status}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                       <!-- {{100/3*item.status}}%-->
+                    <td>
+                      <ng-container [ngSwitch]="item.status">
+                        <span class="text-warning" *ngSwitchCase="1" class="text-danger">انتظار</span>
+                        <span class="text-warning" *ngSwitchCase="2" class="text-warning">در حال انجام</span>
+                        <span class="text-warning" *ngSwitchCase="3" class="text-success">انجام شده!</span>
+                        <span class="text-warning" *ngSwitchDefault class="text-dark">هیچکدام</span>
+                      </ng-container>
+                    </td>
+
+                    <td>
+                      <div class="progress" style="height: 20px;">
+                        <div [ngClass]="{'progress-bar progress-bar-striped bg-success': item.status == 3, 'progress-bar progress-bar-striped bg-warning': item.status == 2
+                                        , 'progress-bar progress-bar-striped bg-danger': item.status == 1}"
+                          role="progressbar" style="width: {{100/3*item.status}}%" aria-valuenow="100" aria-valuemin="0"
+                          aria-valuemax="100">
+                          <!-- {{100/3*item.status}}%-->
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
 
-                  <td>
-                    <ng-container [ngSwitch]="item.status">
-                      <button type="submit" class="btn btn-outline-warning ms-1" data-toggle="tooltip"
-                        title="در حال انجام" *ngSwitchCase="1" (click)="changeStatus(item.id, item.status + 1)">
-                        <i class="bi bi-skip-start-btn-fill"></i><!-- در حال انجام--></button>
-                      <button type="submit" class="btn btn-outline-info ms-1" data-toggle="tooltip" title="انتظار"
-                        *ngSwitchCase="2" (click)="changeStatus(item.id, item.status - 1)">
-                        <i class="bi bi-hourglass"></i><!--انتظار--></button>
-                      <button type="submit" class="btn btn-outline-info ms-1" data-toggle="tooltip" title="در حال انجام"
-                        *ngSwitchCase="3" (click)="changeStatus(item.id, item.status - 1)">
-                        <i class="bi bi-skip-start-btn-fill"></i><!-- در حال انجام--></button>
-                      <button type="submit" class="btn btn-outline-success ms-1" data-toggle="tooltip"
-                        title="پایان یافته" *ngSwitchCase="2" (click)="changeStatus(item.id, item.status + 1)">
-                        <i class="bi bi-check-square-fill"></i><!--پایان یافته--></button>
-                    </ng-container>
-                    <button type="submit" class="btn btn-outline-danger" data-toggle="tooltip" title="حذف"
-                      (click)="deleteTask(item.id)">
-                      <i class="bi bi-x-square-fill"></i></button>
-                  </td>
+                    <td>
+                      <ng-container [ngSwitch]="item.status">
+                        <button type="submit" class="btn btn-outline-warning ms-1" data-toggle="tooltip"
+                          title="در حال انجام" *ngSwitchCase="1" (click)="changeStatus(item.id, item.status + 1)">
+                          <i class="bi bi-skip-start-btn-fill"></i><!-- در حال انجام--></button>
+                        <button type="submit" class="btn btn-outline-info ms-1" data-toggle="tooltip" title="انتظار"
+                          *ngSwitchCase="2" (click)="changeStatus(item.id, item.status - 1)">
+                          <i class="bi bi-hourglass"></i><!--انتظار--></button>
+                        <button type="submit" class="btn btn-outline-info ms-1" data-toggle="tooltip"
+                          title="در حال انجام" *ngSwitchCase="3" (click)="changeStatus(item.id, item.status - 1)">
+                          <i class="bi bi-skip-start-btn-fill"></i><!-- در حال انجام--></button>
+                        <button type="submit" class="btn btn-outline-success ms-1" data-toggle="tooltip"
+                          title="پایان یافته" *ngSwitchCase="2" (click)="changeStatus(item.id, item.status + 1)">
+                          <i class="bi bi-check-square-fill"></i><!--پایان یافته--></button>
+                      </ng-container>
+                      <button type="submit" class="btn btn-outline-danger" data-toggle="tooltip" title="حذف"
+                        (click)="deleteTask(item.id)">
+                        <i class="bi bi-x-square-fill"></i></button>
+                    </td>
 
-                </tr>
+                  </tr>
+                </ng-container>
+                <ng-template #noItemInTask>
+                  <tr>
+                    <td colspan="4">
+                      <h4 class="text-center">هیچ کاری وجود ندارد</h4>
+                    </td>
+                  </tr>
+                </ng-template>
               </tbody>
             </table>
 

@@ -13,27 +13,28 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent {
   title = 'FirstApp';
   tasks: Task[] = [
-    {
-      id: 1,
-      title: 'کار اول',
-      status: 1
-    },
+    // {
+    //   id: 1,
+    //   title: 'کار اول',
+    //   status: 1
+    // },
 
-    {
-      id: 2,
-      title: 'کار دوم',
-      status: 2
-    },
-    {
-      id: 3,
-      title: 'کار سوم',
-      status: 3
-    },
-    {
-      id: 4,
-      title: 'کار چهارم',
-      status: 1
-    }];
+    // {
+    //   id: 2,
+    //   title: 'کار دوم',
+    //   status: 2
+    // },
+    // {
+    //   id: 3,
+    //   title: 'کار سوم',
+    //   status: 3
+    // },
+    // {
+    //   id: 4,
+    //   title: 'کار چهارم',
+    //   status: 1
+    // }
+  ];
   taskTitle = '';
   taskId = 0
   filteredTasks: Task[] = []
