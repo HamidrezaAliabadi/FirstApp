@@ -20,12 +20,15 @@
               </div>
 
               <div class="col-4 text-end">
-                <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="افزودن وظیفه"
-                  (click)="addTask()"><i class="bi bi-plus-circle-fill"></i><!-- افزودن
-                  وظیفه--></button>
-                <button type="submit" class="btn btn-danger mx-1" data-toggle="tooltip" title="حذف همه"
+                <app-icon-button color="primary" type="submit" title="افزودن وظیفه"
+                  icon="plus-circle-fill"></app-icon-button>
+                <app-icon-button color="danger" type="submit" title="حذف همه" icon="trash3-fill"
+                  customClass="mx-1"></app-icon-button>
+                <!-- <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="افزودن وظیفه"
+                  (click)="addTask()"><i class="bi bi-plus-circle-fill"></i></button> 
+                 <button type="submit" class="btn btn-danger mx-1" data-toggle="tooltip" title="حذف همه"
                   (click)="deleteAll()">
-                  <i class="bi bi-trash3-fill"></i><!--حذف همه--></button>
+                  <i class="bi bi-trash3-fill"></i></button> -->
               </div>
 
             </form>

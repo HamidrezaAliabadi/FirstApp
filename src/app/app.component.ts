@@ -3,11 +3,21 @@ import { NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@
 import { RouterOutlet } from '@angular/router';
 import { Task } from './Task';
 import { FormsModule } from '@angular/forms';
+import { IconButtonComponent } from './icon-button/icon-button.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, NgClass, NgIf, FormsModule],
+  imports: [
+    RouterOutlet, 
+    NgFor, 
+    NgSwitch, 
+    NgSwitchCase, 
+    NgSwitchDefault, 
+    NgClass, 
+    NgIf, 
+    FormsModule, 
+    IconButtonComponent],
   templateUrl: './app.component.html'
 })
 export class AppComponent {
