@@ -33,6 +33,10 @@ export class TaskTableComponent {
   changeStatus(taskId: number, status: number) {
     const task = this.taskService.find(taskId)!
     task.status = status
+    const list = JSON.parse(localStorage.getItem('tasks'))
+    if (list) {
+      localStorage.setItem('tasks', JSON.stringify(this.taskService.tasks))
+    }
   }
 
   deleteTask(taskId: number) {
